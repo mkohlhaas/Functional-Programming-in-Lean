@@ -466,8 +466,8 @@ def Prod.switch {α β : Type} (pair : α × β) : β × α :=
 #eval Prod.switch (1, 2) 
 
 inductive Pet where
- | dogName : String -> Pet
- | catName : String -> Pet
+ | dogName : String → Pet
+ | catName : String → Pet
 
 def animals1 : List Pet :=
   [Pet.dogName "Spot",
@@ -527,3 +527,198 @@ def mult2sum (e : Bool × α) : α ⊕ α :=
   match e with
   | (true,  a) => Sum.inl a
   | (false, a) => Sum.inr a
+
+def lengthExplicit {α : Type} (xs : List α) : Nat :=
+  match xs with
+  | [] => 0
+  | _ :: ys => Nat.succ (lengthExplicit ys)
+
+def lengthImplicit (xs : List α) : Nat :=
+  match xs with
+  | [] => 0
+  | _ :: ys => Nat.succ (lengthImplicit ys)
+
+def lengthPatternMatching : List α → Nat
+  | [] => 0
+  | _ :: ys => Nat.succ (lengthPatternMatching ys)
+
+def drop : Nat → List α → List α
+  | Nat.zero, xs        => xs
+  | _, []               => []
+  | Nat.succ n, _ :: xs => drop n xs
+
+def fromOption (default : α) : Option α → α
+  | none   => default
+  | some x => x
+
+#eval none.getD ""
+#eval (some "salmonberry").getD ""
+
+/- given a list of pairs returns a pair of lists -/
+def unzipInefficient : List (α × β) → List α × List β
+  | []            => ([], [])
+  | (x, y) :: xys => (x :: (unzipInefficient xys).fst, y :: (unzipInefficient xys).snd) /- oops, two recursive calls -/
+
+/- only one recursive call with `let` -/
+/- To use `let` on a single line, separate the local definition from the body with a semicolon. -/
+def unzipEfficient : List (α × β) → List α × List β
+  | []            => ([], [])
+  | (x, y) :: xys => let unzipped : List α × List β := unzipEfficient xys
+                     (x :: unzipped.fst, y :: unzipped.snd)
+
+/- Local definitions with `let` may also use pattern matching when one pattern is enough to match all cases. -/
+def unzip : List (α × β) → List α × List β
+  | []            => ([], [])
+  | (x, y) :: xys => let (xs, ys) : List α × List β := unzip xys
+                     (x :: xs, y :: ys)
+
+/- recursive let definitions must be explicitly indicated so -/
+def reverse (xs : List α) : List α :=
+  let rec helper : List α → List α → List α
+    | [], soFar      => soFar
+    | y :: ys, soFar => helper ys (y :: soFar)
+  helper xs []
+
+/- type annotations -/
+def id1 (x : α) : α := x
+def id2 (x : α)     := x
+def id3 x           := x
+
+def dropSimultaneousMatching (n : Nat) (xs : List α) : List α :=
+  match n, xs with
+  | Nat.zero, ys         => ys
+  | _, []                => []
+  | Nat.succ n , _ :: ys => dropSimultaneousMatching n ys
+
+def sameLengthPair (xs : List α) (ys : List β) : Bool :=
+  match (xs, ys) with
+  | ([], [])             => true
+  | (x :: xs', y :: ys') => sameLengthPair xs' ys'
+  | _                    => false
+
+
+/- Lean tracks the connection between the expression being matched and the patterns, -/
+/- and this information is used for purposes that include checking for termination -/
+/- and propagating static type information. -/
+def sameLengthSimultaneousMatching (xs : List α) (ys : List β) : Bool :=
+  match xs, ys with
+  | [], []             => true
+  | _ :: xs', _ :: ys' => sameLengthSimultaneousMatching xs' ys'
+  | _, _               => false
+
+/- using literals instead of Nat.zero, Nat.succ -/
+def evenLiterals : Nat → Bool
+  | 0     => true
+  | n + 1 => not (evenLiterals n)
+
+def halveLiterals : Nat → Nat
+  | Nat.zero              => 0
+  | Nat.succ Nat.zero     => 0
+  | Nat.succ (Nat.succ n) => halveLiterals n + 1
+
+def halve : Nat → Nat
+  | 0     => 0
+  | 1     => 0
+  | n + 2 => halve n + 1
+
+def halveBad : Nat → Nat
+  | 0     => 0
+  | 1     => 0
+  | 2 + n => halveBad n + 1
+  
+/- anonymous function -/
+#check fun x => x + 1
+
+/- with type annotation -/
+#check fun (x : Int) => x + 1
+
+/- with type params -/
+#check fun {α : Type} (x : α) => x
+
+/- can be written with λ instead of `fun`-/
+#check λ x => x + 1
+
+/- anonymous function with pattern matching -/
+#check fun
+  | 0     => none
+  | n + 1 => some n
+
+/- function written as a function expression -/
+def double : Nat → Nat := fun
+  | 0     => 0
+  | k + 1 => double k + 2
+
+/- centered dot `·` -/
+#check fun x => x + 1
+#check (· + 1) 
+
+#check (· + 5, 3)   /- a function that returns a pair of numbers  -/
+#check ((· + 5), 3) /- a pair of a function and a number. -/
+
+#eval (· , ·) 1 2
+
+#eval (fun x => x + x) 5 
+
+#eval (· * 2) 5 
+
+/- Namespaces -/
+
+def Nat.double (x : Nat) : Nat := x + x
+
+#eval (4 : Nat).double
+
+namespace NewNamespace
+def triple (x : Nat) : Nat := 3 * x
+def quadruple (x : Nat) : Nat := 2 * x + 2 * x
+end NewNamespace
+
+#check NewNamespace.triple
+
+#check NewNamespace.quadruple
+
+/- open namespace prior to an expression -/
+def timesTwelve (x : Nat) :=
+  open NewNamespace in
+  quadruple (triple x)
+
+/- open namespace prior to a command -/
+open NewNamespace in
+#check quadruple
+
+/- Namespaces may be opened for all following commands for the rest of the file. -/
+/- To do this, omit the `in` from a top-level usage of open. -/
+
+inductive Inline : Type where
+  | lineBreak
+  | string : String → Inline
+  | emph :   Inline → Inline
+  | strong : Inline → Inline
+
+def Inline.string1? (inline : Inline) : Option String :=
+  match inline with
+  | Inline.string s => some s
+  | _               => none
+
+/- `if let` can be used with sum types and might be easier to read (???) -/
+def Inline.string2? (inline : Inline) : Option String :=
+  if let Inline.string s := inline then
+    some s
+  else none
+
+/- Constructing Structures -/
+
+/- 1. constructor -/
+#eval Point.mk 1 2
+
+/- 2. brace notation -/
+#eval ({ x := 1, y := 2 } : Point)
+#eval  { x := 1, y := 2 : Point } 
+
+/- 3. positional structure arguments -/
+#eval (⟨1, 2⟩ : Point)
+
+/- string interpolation -/
+#eval s!"three fives is {NewNamespace.triple 5}"
+
+/- function cannot string interpolated -/
+#check s!"three fives is {NewNamespace.triple}"

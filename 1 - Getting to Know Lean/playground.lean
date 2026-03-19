@@ -1,32 +1,18 @@
-#eval 1 + 3 * 5
-
-#eval String.append "Hello, " "Lean!"
-
-#eval String.append "great " (String.append "oak " "tree")
-
+#eval 1 + 3 * 5                                             
+#eval String.append "Hello, " "Lean!"                       
+#eval String.append "great " (String.append "oak " "tree")  
 #eval String.append "it is " (if 1 > 2 then "yes" else "no")
-
-#eval 42 + 19
-
-#eval String.append "A" (String.append "B" "C")
-
-#eval String.append (String.append "A" "B") "C"
-
-#eval if 3 == 3 then 5 else 7
-
-#eval if 3 ==4 then "equal" else "not equal"
-
-#eval (1 + 2 : Nat)
-
-#eval 1 - 2
-
-#eval (1 - 2 : Nat)
-
-#eval (1 - 2 : Int)
-
-#check (1 - 2 : Int)
-
-#check (1 - 2)
+#eval 42 + 19                                               
+#eval String.append "A" (String.append "B" "C")             
+#eval String.append (String.append "A" "B") "C"             
+#eval if 3 == 3 then 5 else 7                               
+#eval if 3 ==4 then "equal" else "not equal"                
+#eval (1 + 2 : Nat)                                         
+#eval 1 - 2                                                 
+#eval (1 - 2 : Nat)                                         
+#eval (1 - 2 : Int)                                         
+#check (1 - 2 : Int)                                        
+#check (1 - 2)                                              
 
 /- #check String.append ["hello", " "] "world" -/
 
@@ -34,17 +20,16 @@ def hello := "Hello"
 
 def lean : String := "Lean"
 
-#eval String.append " " lean
-
-#eval String.append hello (String.append " " lean)
+#eval String.append " " lean                                
+#eval String.append hello (String.append " " lean)          
 
 def add1_1 n := n + 1
 
-#eval add1_1 5
+#eval add1_1 5                                              
 
 def add1_2 (n : Nat) : Nat := n + 1
 
-#eval add1_2 5
+#eval add1_2 5                                              
 
 /- def maximum1 n k : Nat := -/
 /-   if n < k then -/
@@ -56,7 +41,7 @@ def maximum2 (n : Nat) (k : Nat) : Nat :=
     k
   else n 
 
-#eval maximum2 2 5
+#eval maximum2 2 5                                        
 
 def spaceBetween1 (before : String) (after : String) : String :=
   String.append before (String.append " " after)
@@ -64,23 +49,23 @@ def spaceBetween1 (before : String) (after : String) : String :=
 /- def spaceBetween2 before after : String := -/
 /-   String.append before (String.append " " after) -/
 
-#check  spaceBetween1
-#check (spaceBetween1)
+#check  spaceBetween1                                    
+#check (spaceBetween1)                                   
 
 /- Define the function joinStringsWith with type String → String → String → String that creates a new string by placing its first argument between its second and third arguments. joinStringsWith ", " "one" "and another" should evaluate to "one, and another". -/
 
 def joinStringsWith sep before after := String.append before (String.append sep after)
 
-#check joinStringsWith
+#check joinStringsWith                                   
 
-#eval joinStringsWith ", " "one" "and another"
+#eval joinStringsWith ", " "one" "and another"           
 
-#check joinStringsWith ": "
+#check joinStringsWith ": "                              
 
 def volume (height : Nat) width depth := height * width * depth
 
-#check volume
-#check (volume)
+#check volume                                            
+#check (volume)                                          
 
 /- def Str : Type := String -/
 
@@ -90,8 +75,8 @@ def Str := String
 def aStr : Str    := "This is a string."
 def bStr : String := "This is another string."
 
-#eval aStr ++ aStr
-#eval bStr ++ bStr
+#eval aStr ++ aStr                                       
+#eval bStr ++ bStr                                       
 
 /- def NaturalNumber : Type := Nat -/
 def NaturalNumber := Nat
@@ -104,12 +89,12 @@ abbrev N := Nat
 
 def thirtyNine : N := 39
 
-#check 1.2
-#check -454.2123215
-#check 0.0
+#check 1.2                                              
+#check -454.2123215                                     
+#check 0.0                                              
 
-#check 0
-#check (0 : Float)
+#check 0                                                
+#check (0 : Float)                                      
 
 structure Point where
   x : Float
@@ -118,10 +103,10 @@ structure Point where
 def origin : Point := { x := 0.0,
                         y := 0.0 }
 
-#eval origin                       
+#eval origin                                            
 
-#eval origin.x
-#eval origin.y
+#eval origin.x                                          
+#eval origin.y                                          
 
 def addPoints (p1 : Point) (p2 : Point) : Point :=
   { x := p1.x + p2.x,
@@ -130,12 +115,12 @@ def addPoints (p1 : Point) (p2 : Point) : Point :=
 def p1 : Point := { x := 1.5, y := 32 }
 def p2 : Point := { x := -8,  y := 0.2 }
   
-#eval addPoints p1 p2 
+#eval addPoints p1 p2                                   
 
 def distance (p1 : Point) (p2 : Point) : Float :=
   Float.sqrt (((p2.x - p1.x) ^ 2.0) + ((p2.y - p1.y) ^ 2.0))
 
-#eval distance p1 p2
+#eval distance p1 p2                                    
 
 structure Point3D where
   x : Float
@@ -146,8 +131,8 @@ def origin3D : Point3D := { x := 0.0,
                             y := 0.0,
                             z := 0.0 }
 
-#check ({ x := 0.0, y := 0.0 } : Point)
-#check { x := 0.0, y := 0.0 : Point}
+#check ({ x := 0.0, y := 0.0 } : Point)                 
+#check { x := 0.0, y := 0.0 : Point}                    
 
 /- def zeroX (p : Point) : Point := { x := 0, -/
 /-                                    y := p.y } -/
@@ -156,32 +141,32 @@ def zeroX (p : Point) : Point := { p with x := 0 }
 
 def fourAndThree : Point := { x := 4.3, y := 3.4 }
 
-#eval fourAndThree
-#eval zeroX fourAndThree
-#eval fourAndThree
+#eval fourAndThree                                      
+#eval zeroX fourAndThree                                
+#eval fourAndThree                                      
 
-#check Point.mk 1.5 2.8
+#check Point.mk 1.5 2.8                                 
 
-#check (Point.mk)
-#check (Point.x)
-#check (Point.y)
+#check (Point.mk)                                       
+#check (Point.x)                                        
+#check (Point.y)                                        
 
-#eval origin.x
-#eval Point.x origin
+#eval origin.x                                          
+#eval Point.x origin                                    
 
 structure MyPoint where
   point :: /- new constructor name -/
   x : Float
   y : Float
 
-#check MyPoint.point 1.5 2.8
+#check MyPoint.point 1.5 2.8                            
 
-#eval "one string".append " and another"
+#eval "one string".append " and another"                
 
 def Point.modifyBoth (f : Float → Float) (p : Point) : Point :=
   { x := f p.x, y := f p.y }
 
-#eval fourAndThree.modifyBoth Float.floor
+#eval fourAndThree.modifyBoth Float.floor               
 
 structure RectangularPrism where 
    height : Float
@@ -219,7 +204,7 @@ inductive MyNat where
   | zero 
   | succ (n : Nat)
 
-#eval Nat.succ Nat.zero
+#eval Nat.succ Nat.zero                                 
 #eval Nat.succ (Nat.succ (Nat.succ (Nat.succ Nat.zero)))
 
 def isZero (n : Nat) : Bool :=
@@ -227,17 +212,17 @@ def isZero (n : Nat) : Bool :=
   | Nat.zero   => true
   | Nat.succ _ => false
 
-#eval isZero 0
-#eval isZero 5
+#eval isZero 0                                          
+#eval isZero 5                                          
 
 def pred (n : Nat) : Nat :=
   match n with
   | Nat.zero   => Nat.zero
   | Nat.succ k => k
 
-#eval pred 0
-#eval pred 5
-#eval pred 839
+#eval pred 0                                            
+#eval pred 5                                            
+#eval pred 839                                          
 
 def depth (p : Point3D) : Float :=
   match p with
@@ -245,14 +230,14 @@ def depth (p : Point3D) : Float :=
       y := _w,
       z :=  d } => d
 
-#eval depth origin3D 
+#eval depth origin3D                                    
 
 def even (n : Nat) : Bool :=
   match n with
   | Nat.zero   => true
   | Nat.succ k => not (even k)
 
-def evenLoops (n : Nat) : Bool :=
+def evenLoops (n : Nat) : Bool :=                       
   match n with
   | Nat.zero   => true
   | Nat.succ k => not (evenLoops n)
@@ -272,7 +257,7 @@ def minus (n : Nat) (k : Nat) : Nat :=
   | Nat.zero => n
   | Nat.succ k' => pred (minus n k')
 
-def div (n : Nat) (k : Nat) : Nat :=
+def div (n : Nat) (k : Nat) : Nat :=                    
   if n < k then
     0
   else Nat.succ (div (n - k) k)
@@ -287,7 +272,7 @@ def natOrigin : PPoint Nat := { x := Nat.zero,
 def replaceX (point : PPoint α) (newX : α) : PPoint α :=
   { point with x := newX }
                                 
-#eval replaceX natOrigin 5
+#eval replaceX natOrigin 5                              
 
 inductive Sign where
   | pos
@@ -298,8 +283,8 @@ def posOrNegThree (s : Sign) : match s with | Sign.pos => Nat | Sign.neg => Int 
   | Sign.pos => ( 3 : Nat)
   | Sign.neg => (-3 : Int)
 
-#eval posOrNegThree Sign.pos
-#eval posOrNegThree Sign.neg
+#eval posOrNegThree Sign.pos                            
+#eval posOrNegThree Sign.neg                            
 
 def primesUnder10 : List Nat := [2, 3, 5, 7]
 
@@ -310,9 +295,9 @@ inductive MyList (α : Type) where
 def explicitPrimesUnder10 : List Nat :=
   List.cons 2 (List.cons 3 (List.cons 5 (List.cons 7 List.nil)))
 
-#eval explicitPrimesUnder10
+#eval explicitPrimesUnder10                             
 
-#eval List.length ["Sourdough", "bread"]
+#eval List.length ["Sourdough", "bread"]                
 
 def length (xs : List α) : Nat :=
   match xs with
@@ -320,19 +305,19 @@ def length (xs : List α) : Nat :=
   | List.cons _ lst => Nat.succ (length lst)
 
 
-#eval length ["Sourdough", "bread"]
+#eval length ["Sourdough", "bread"]                     
 
 def length1 (xs : List α) : Nat :=
   match xs with
   | []      => 0
   | _ :: ys => Nat.succ (length1 ys)
 
-#eval length1 ["Sourdough", "bread"]
+#eval length1 ["Sourdough", "bread"]                    
 
-#eval ["Sourdough", "bread"].length
+#eval ["Sourdough", "bread"].length                     
 
-#check List.length
-#check List.length (α := Int)
+#check List.length                                      
+#check List.length (α := Int)                           
 
 inductive MyOption (α : Type) : Type where
   | none           : MyOption α
@@ -343,18 +328,18 @@ def head? {α : Type} (xs : List α) : Option α :=
   | []     => none
   | y :: _ => some y
 
-#eval head? ([] : List String)
-#eval head? ["Sourdough", "bread"]
+#eval head? ([] : List String)                         
+#eval head? ["Sourdough", "bread"]                     
 
-#eval primesUnder10.head?
+#eval primesUnder10.head?                              
 
 /- List.head  requires the caller to provide mathematical evidence that the list is not empty -/
 /- List.head? returns an Option -/
 /- List.head! crashes the program when passed an empty list -/
 /- List.headD takes a default value to return in case the list is empty -/
 
-#eval [].head? (α := Int)
-#eval ([] : List Int).head?
+#eval [].head? (α := Int)                              
+#eval ([] : List Int).head?                            
 
 structure MyProd (α : Type) (β : Type) : Type where
   fst : α
@@ -386,7 +371,7 @@ def howManyDogs (pets : List PetName) : Nat :=
   | Sum.inl _ :: pets => howManyDogs pets + 1
   | Sum.inr _ :: pets => howManyDogs pets
 
-#eval howManyDogs animals
+#eval howManyDogs animals                              
 
 /- in polymorphic code can be used as a placeholder for missing data -/
 inductive MyUnit : Type where
@@ -431,7 +416,7 @@ inductive WoodSplittingTool where
   | froe
   deriving Repr
   
-#eval WoodSplittingTool.axe
+#eval WoodSplittingTool.axe                            
 
 def allTools : List WoodSplittingTool := [
   WoodSplittingTool.axe,
@@ -439,7 +424,7 @@ def allTools : List WoodSplittingTool := [
   WoodSplittingTool.froe
 ]
 
-#eval allTools
+#eval allTools                                         
 
 def lastEntry (l : List α) : Option α := 
   match l with
@@ -447,23 +432,23 @@ def lastEntry (l : List α) : Option α :=
   | [elem]   => some elem
   | _ :: xs  => lastEntry xs
 
-#eval lastEntry ([] : List Nat)
-#eval lastEntry [1]
-#eval lastEntry [1, 2, 3, 4, 5]
+#eval lastEntry ([] : List Nat)                        
+#eval lastEntry [1]                                    
+#eval lastEntry [1, 2, 3, 4, 5]                        
 
 def List.findFirst? {α : Type} (xs : List α) (predicate : α → Bool) : Option α :=
   match xs with
   | [] => none
   | x :: xs => if predicate x then some x else List.findFirst? xs predicate
 
-#eval List.findFirst? [] even
-#eval List.findFirst? [1, 2, 3, 4, 5] even
+#eval List.findFirst? [] even                          
+#eval List.findFirst? [1, 2, 3, 4, 5] even             
 
 def Prod.switch {α β : Type} (pair : α × β) : β × α :=
   match pair with
   | (a, b) => (b, a)
 
-#eval Prod.switch (1, 2) 
+#eval Prod.switch (1, 2)                               
 
 inductive Pet where
  | dogName : String → Pet
@@ -482,7 +467,7 @@ def howManyDogs1 (pets : List Pet) : Nat :=
   | Pet.dogName _ :: pets => howManyDogs1 pets + 1
   | Pet.catName _ :: pets => howManyDogs1 pets
 
-#eval howManyDogs1 animals1
+#eval howManyDogs1 animals1                                          
 
 def badZip {α β : Type} (xs : List α) (ys : List β) : List (α × β) :=
   match (xs, ys) with
@@ -498,9 +483,9 @@ def zip {α β : Type} (xs : List α) (ys : List β) : List (α × β) :=
                 | [] => []
                 | y :: ys' => List.cons (x, y) (zip xs' ys')
 
-#eval zip [1, 2, 3, 4, 5] ["a", "b", "c", "d", "e"]
-#eval zip [1, 2, 3, 4   ] ["a", "b", "c", "d", "e"]
-#eval zip [1, 2, 3, 4, 5] ["a", "b", "c", "d"     ]
+#eval zip [1, 2, 3, 4, 5] ["a", "b", "c", "d", "e"]                  
+#eval zip [1, 2, 3, 4   ] ["a", "b", "c", "d", "e"]                  
+#eval zip [1, 2, 3, 4, 5] ["a", "b", "c", "d"     ]                  
 
 def takeAcc (n : Nat) (xs : List α) (ys : List α) : List α :=
   match n with
@@ -511,16 +496,16 @@ def takeAcc (n : Nat) (xs : List α) (ys : List α) : List α :=
 
 def take (n : Nat) (xs : List α) : List α := takeAcc n xs []
 
-#eval take 1 ["bolete", "oyster"] 
-#eval take 3 ["bolete", "oyster"] 
+#eval take 1 ["bolete", "oyster"]                                   
+#eval take 3 ["bolete", "oyster"]                                   
 
 def distribute (e : α × (β ⊕ γ)) : (α × β) ⊕ (α × γ) :=
   match e with
   | (a, Sum.inl b) => Sum.inl (a, b)
   | (a, Sum.inr c) => Sum.inr (a, c)
   
-#eval distribute (1, (Sum.inl "a" : String ⊕ String))
-#eval distribute (1, (Sum.inr "a" : String ⊕ String))
+#eval distribute (1, (Sum.inl "a" : String ⊕ String))               
+#eval distribute (1, (Sum.inr "a" : String ⊕ String))               
 
 /- Using the analogy between types and arithmetic, write a function that turns multiplication by two into a sum. -/
 def mult2sum (e : Bool × α) : α ⊕ α :=
@@ -552,7 +537,7 @@ def fromOption (default : α) : Option α → α
   | some x => x
 
 #eval none.getD ""
-#eval (some "salmonberry").getD ""
+#eval (some "salmonberry").getD ""                                
 
 /- given a list of pairs returns a pair of lists -/
 def unzipInefficient : List (α × β) → List α × List β
@@ -582,7 +567,7 @@ def reverse (xs : List α) : List α :=
 /- type annotations -/
 def id1 (x : α) : α := x
 def id2 (x : α)     := x
-def id3 x           := x
+def id3 x           := x                                          
 
 def dropSimultaneousMatching (n : Nat) (xs : List α) : List α :=
   match n, xs with
@@ -590,7 +575,7 @@ def dropSimultaneousMatching (n : Nat) (xs : List α) : List α :=
   | _, []                => []
   | Nat.succ n , _ :: ys => dropSimultaneousMatching n ys
 
-def sameLengthPair (xs : List α) (ys : List β) : Bool :=
+def sameLengthPair (xs : List α) (ys : List β) : Bool :=          
   match (xs, ys) with
   | ([], [])             => true
   | (x :: xs', y :: ys') => sameLengthPair xs' ys'
@@ -624,22 +609,22 @@ def halve : Nat → Nat
 def halveBad : Nat → Nat
   | 0     => 0
   | 1     => 0
-  | 2 + n => halveBad n + 1
+  | 2 + n => halveBad n + 1                                    
   
 /- anonymous function -/
-#check fun x => x + 1
+#check fun x => x + 1                                          
 
 /- with type annotation -/
-#check fun (x : Int) => x + 1
+#check fun (x : Int) => x + 1                                  
 
 /- with type params -/
-#check fun {α : Type} (x : α) => x
+#check fun {α : Type} (x : α) => x                             
 
 /- can be written with λ instead of `fun`-/
-#check λ x => x + 1
+#check λ x => x + 1                                            
 
 /- anonymous function with pattern matching -/
-#check fun
+#check fun                                                     
   | 0     => none
   | n + 1 => some n
 
@@ -649,32 +634,32 @@ def double : Nat → Nat := fun
   | k + 1 => double k + 2
 
 /- centered dot `·` -/
-#check fun x => x + 1
-#check (· + 1) 
+#check fun x => x + 1                                               
+#check (· + 1)                                                      
 
 #check (· + 5, 3)   /- a function that returns a pair of numbers  -/
-#check ((· + 5), 3) /- a pair of a function and a number. -/
+#check ((· + 5), 3) /- a pair of a function and a number. -/        
 
-#eval (· , ·) 1 2
+#eval (· , ·) 1 2                                                   
 
-#eval (fun x => x + x) 5 
+#eval (fun x => x + x) 5                                            
 
-#eval (· * 2) 5 
+#eval (· * 2) 5                                                     
 
 /- Namespaces -/
 
 def Nat.double (x : Nat) : Nat := x + x
 
-#eval (4 : Nat).double
+#eval (4 : Nat).double                                              
 
 namespace NewNamespace
 def triple (x : Nat) : Nat := 3 * x
 def quadruple (x : Nat) : Nat := 2 * x + 2 * x
 end NewNamespace
 
-#check NewNamespace.triple
+#check NewNamespace.triple                                          
 
-#check NewNamespace.quadruple
+#check NewNamespace.quadruple                                       
 
 /- open namespace prior to an expression -/
 def timesTwelve (x : Nat) :=
@@ -683,7 +668,7 @@ def timesTwelve (x : Nat) :=
 
 /- open namespace prior to a command -/
 open NewNamespace in
-#check quadruple
+#check quadruple                                                    
 
 /- Namespaces may be opened for all following commands for the rest of the file. -/
 /- To do this, omit the `in` from a top-level usage of open. -/
@@ -708,17 +693,17 @@ def Inline.string2? (inline : Inline) : Option String :=
 /- Constructing Structures -/
 
 /- 1. constructor -/
-#eval Point.mk 1 2
+#eval Point.mk 1 2                              
 
 /- 2. brace notation -/
-#eval ({ x := 1, y := 2 } : Point)
-#eval  { x := 1, y := 2 : Point } 
+#eval ({ x := 1, y := 2 } : Point)              
+#eval  { x := 1, y := 2 : Point }               
 
 /- 3. positional structure arguments -/
-#eval (⟨1, 2⟩ : Point)
+#eval (⟨1, 2⟩ : Point)                          
 
 /- string interpolation -/
 #eval s!"three fives is {NewNamespace.triple 5}"
 
 /- function cannot string interpolated -/
-#check s!"three fives is {NewNamespace.triple}"
+#check s!"three fives is {NewNamespace.triple}" 
